@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Класс построен на основе паттерна синглтон.
  * Читает проперти из указанного файла.
  * По дефолту файл application.properties
  * Имя файла можно задать при запуске тестов используя ключ -D
@@ -13,7 +12,6 @@ import java.util.Properties;
 
 public class TestPropManager {
     private final Properties properties = new Properties();
-
     private static TestPropManager INSTANCE = null;
 
     private TestPropManager() {
