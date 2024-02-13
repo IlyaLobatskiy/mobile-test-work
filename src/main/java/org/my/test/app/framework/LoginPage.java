@@ -41,8 +41,8 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage authorizationInvalidData() {
-        fillingInInputField(email, prop.getProperty(PropConst.LOGIN));
-        fillingInInputField(password, prop.getProperty(PropConst.PASSWORD));
+        fillingInInputField(email, "123");
+        fillingInInputField(password,"321");
         clickElement(singButton);
         Assertions.assertEquals("Login failed", getTextElement(loginText),
                 "Пользователь авторизован или неверный текст ошибки");
