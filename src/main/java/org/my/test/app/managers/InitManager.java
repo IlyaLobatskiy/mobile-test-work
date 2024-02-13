@@ -1,7 +1,6 @@
 package org.my.test.app.managers;
 
 public class InitManager {
-
     /**
      * Driver manager
      *
@@ -14,9 +13,7 @@ public class InitManager {
      *
      * @see DriverManager#quitDriver()
      */
-
     public static void quitFramework() {
         driverManager.quitDriver();
     }
-
 }
