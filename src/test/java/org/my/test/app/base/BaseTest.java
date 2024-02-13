@@ -7,12 +7,11 @@ import org.my.test.app.managers.TestPropManager;
 
 public class BaseTest {
     /**
-     * Менаджер страниц. Возвращает единственный экземпляр страниц в классах наследниках.
+     * Менеджер страниц. Возвращает единственный экземпляр страниц в классах наследниках.
      *
      * @see PageManager#getPageManager()
      */
     protected final PageManager pageManager = PageManager.getPageManager();
-
     /**
      * Менеджер properties
      *
@@ -25,7 +24,6 @@ public class BaseTest {
      *
      * @see InitManager#quitFramework()
      */
-
     @AfterAll
     public static void after() {
         InitManager.quitFramework();
