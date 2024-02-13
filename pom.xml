@@ -27,7 +27,7 @@
         <junit-platform-launcher.version>1.10.0</junit-platform-launcher.version>
         <selenium-java.version>4.17.0</selenium-java.version>
         <commons-validator.version>1.7</commons-validator.version>
-        <allure-junit4.version>2.25.0</allure-junit4.version>
+        <allure-maven.version>2.12.0</allure-maven.version>
         <lombok.version>1.18.30</lombok.version>
 
         <!-- Версии плагинов -->
@@ -118,8 +118,8 @@
         <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit4 -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit4</artifactId>
-            <version>${allure-junit4.version}</version>
+            <artifactId>allure-maven</artifactId>
+            <version>${allure-maven.version}</version>
             <scope>test</scope>
         </dependency>
 

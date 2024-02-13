@@ -1,22 +1,27 @@
 package org.my.test.app.framework;
 
-import org.my.test.app.managers.DriverMansger;
+import org.my.test.app.managers.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
+/**
+ * Страница авторизации
+ */
 
-    DriverMansger driver = DriverMansger.getDriverManager();
-    public LoginPage() throws Exception {
+public class LoginPage extends BasePage {
+
+    DriverManager driver = DriverManager.getDriverManager();
+
+    public LoginPage() {
         PageFactory.initElements(driver.getDriver(), this);
     }
 
     @FindBy(id = "com.example.login:id/toolbar")
     WebElement screenTitle;
-    @FindBy(id= "com.example.login:id/username")
+    @FindBy(id = "com.example.login:id/username")
     WebElement email;
-    @FindBy(id= "com.example.login:id/password")
+    @FindBy(id = "com.example.login:id/password")
     WebElement password;
     @FindBy(id = "com.example.login:id/login")
     WebElement singButton;
@@ -24,27 +29,15 @@ public class LoginPage {
     WebElement loginText;
 
 
-
-    public boolean checkTitleScreen(){
-        return screenTitle.isDisplayed();
+    public boolean checkTitleScreen() {
+        return isDisplayedElement(screenTitle);
     }
 
-    public void emailInput(String eml){
-        email.sendKeys(eml);
-    }
+    public String authorization(String eml, String pass) {
+        fillingInInputField(email, eml);
+        fillingInInputField(password, pass);
+        clickElement(singButton);
 
-    public void passwordInput(String pass){
-        password.sendKeys(pass);
-    }
-
-    public void singButtonClick(){
-        singButton.click();
-    }
-
-    public String authorization(String eml, String pass){
-        emailInput(eml);
-        passwordInput(pass);
-        singButtonClick();
-        return loginText.getText();
+        return getTextElement(loginText);
     }
 }

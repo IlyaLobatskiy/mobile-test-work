@@ -4,8 +4,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Класс построен на основе паттерна синглтон.
+ * Читает проперти из указанного файла.
+ * По дефолту файл application.properties
+ * Имя файла можно задать при запуске тестов используя ключ -D
+ */
+
 public class TestPropManager {
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
     private static TestPropManager INSTANCE = null;
 
@@ -23,10 +30,6 @@ public class TestPropManager {
             INSTANCE = new TestPropManager();
         }
         return INSTANCE;
-    }
-
-    public String getProperty(String key, String defaultValue) {
-        return properties.getProperty(key, defaultValue);
     }
 
     public String getProperty(String key) {
