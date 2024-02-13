@@ -3,18 +3,14 @@ package org.my.test.app.managers;
 import org.my.test.app.framework.LoginPage;
 
 /**
- * Класс построен на основе паттерна синглтон.
  * Управляет созданием страниц.
- * Создает и возвращает страницу в единственном экземпляре
+ * Возвращает создает и возвращает страницу в единственном экземпляре
  */
 public class PageManager {
-
     private static PageManager INSTANCE = null;
-
     private LoginPage loginPage = null;
 
     private PageManager() {
-
     }
 
     public static PageManager getPageManager() {
