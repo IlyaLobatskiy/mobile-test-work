@@ -30,8 +30,8 @@ public class AuthorizationTest extends BaseTest {
     @DisplayName("Авторизация с невалидными данными")
     public void errAuthorizationTest() {
         Assertions.assertEquals("Login failed",
-                pageManager.getLoginPage().authorization("12", "1124")
-                , "Пользователь авторизован или неверный текст ошибки");
+                pageManager.getLoginPage().authorization("12", "1124"),
+                                "Пользователь авторизован или неверный текст ошибки");
     }
 
 }
