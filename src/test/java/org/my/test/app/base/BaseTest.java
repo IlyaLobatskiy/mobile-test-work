@@ -7,7 +7,7 @@ import org.my.test.app.managers.TestPropManager;
 
 public class BaseTest {
     /**
-     * Мэнаджер страниц. Возвращает единственный экземпляр страниц в классах наследниках.
+     * Менаджер страниц. Возвращает единственный экземпляр страниц в классах наследниках.
      *
      * @see PageManager#getPageManager()
      */
