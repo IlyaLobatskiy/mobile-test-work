@@ -9,12 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Класс построен на основе паттерна синглтон.
  * Создает единственный экземпляр драйвера.
  */
-
 public class DriverManager {
-
     private WebDriver driver = null;
     private static DriverManager INSTANCE = null;
     private final TestPropManager testPropManager = TestPropManager.getTestPropManager();
@@ -30,7 +27,6 @@ public class DriverManager {
     }
 
     private URL getUrl() {
-
         try {
             return new URL(testPropManager
                     .getProperty(PropConst.BASE_URL));
@@ -39,12 +35,9 @@ public class DriverManager {
         }
     }
 
-
     public WebDriver getDriver() {
         if (driver == null) {
-
             DesiredCapabilities capabilities = new DesiredCapabilities();
-
             capabilities.setCapability("platformName", testPropManager.getProperty(PropConst.PLATFORM_NAME));
             capabilities.setCapability("appium:deviceName", testPropManager.getProperty(PropConst.DEVICE_NAME));
             capabilities.setCapability("appium:automationName", testPropManager.getProperty(PropConst.AUTOMATION_NAME));
@@ -53,11 +46,8 @@ public class DriverManager {
             capabilities.setCapability("appium:appActivity", testPropManager.getProperty(PropConst.APP_ACTIVITY));
             capabilities.setCapability("appium:app", testPropManager.getProperty(PropConst.APP));
             capabilities.setCapability("appium:fullReset", Boolean.parseBoolean(testPropManager.getProperty(PropConst.FULL_RESET)));
-
             driver = new AndroidDriver(getUrl(), capabilities);
-
         }
-
         return driver;
     }
 
