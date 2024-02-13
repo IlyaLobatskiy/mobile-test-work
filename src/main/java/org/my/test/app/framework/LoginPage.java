@@ -1,6 +1,7 @@
 package org.my.test.app.framework;
 
-import org.my.test.app.managers.DriverManager;
+import org.junit.jupiter.api.Assertions;
+import org.my.test.app.utils.PropConst;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -10,13 +11,6 @@ import org.openqa.selenium.support.PageFactory;
  */
 
 public class LoginPage extends BasePage {
-
-    DriverManager driver = DriverManager.getDriverManager();
-
-    public LoginPage() {
-        PageFactory.initElements(driver.getDriver(), this);
-    }
-
     @FindBy(id = "com.example.login:id/toolbar")
     WebElement screenTitle;
     @FindBy(id = "com.example.login:id/username")
@@ -28,16 +22,30 @@ public class LoginPage extends BasePage {
     @FindBy(id = "com.example.login:id/succestext")
     WebElement loginText;
 
-
-    public boolean checkTitleScreen() {
-        return isDisplayedElement(screenTitle);
+    public LoginPage() {
+        PageFactory.initElements(driver.getDriver(), this);
     }
 
-    public String authorization(String eml, String pass) {
-        fillingInInputField(email, eml);
-        fillingInInputField(password, pass);
-        clickElement(singButton);
+    public LoginPage checkTitleScreen() {
+        Assertions.assertTrue(isDisplayedElement(screenTitle), "Приложение не запущено");
+        return pageManager.getLoginPage();
+    }
 
-        return getTextElement(loginText);
+    public LoginPage authorizationValidData() {
+        fillingInInputField(email, prop.getProperty(PropConst.LOGIN));
+        fillingInInputField(password, prop.getProperty(PropConst.PASSWORD));
+        clickElement(singButton);
+        Assertions.assertEquals("Welcome ! user", getTextElement(loginText),
+                "Пользователь авторизован или неверный текст ошибки");
+        return pageManager.getLoginPage();
+    }
+
+    public LoginPage authorizationInvalidData() {
+        fillingInInputField(email, prop.getProperty(PropConst.LOGIN));
+        fillingInInputField(password, prop.getProperty(PropConst.PASSWORD));
+        clickElement(singButton);
+        Assertions.assertEquals("Login failed", getTextElement(loginText),
+                "Пользователь авторизован или неверный текст ошибки");
+        return pageManager.getLoginPage();
     }
 }
