@@ -43,7 +43,7 @@ public class BasePage {
      *
      * @param element - элемент текст которого возвращаем
      */
-    public String getTextElement(WebElement element) {
+    public String getTextElement(WebElement element)a {
         return element.getText();
     }
 }

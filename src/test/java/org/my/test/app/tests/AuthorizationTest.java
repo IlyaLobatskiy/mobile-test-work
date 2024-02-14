@@ -3,6 +3,7 @@ package org.my.test.app.tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.my.test.app.base.BaseTest;
+import org.my.test.app.test.data.TestDataConst;
 
 public class AuthorizationTest extends BaseTest {
     @Test
@@ -10,7 +11,7 @@ public class AuthorizationTest extends BaseTest {
     public void authorization() {
         pageManager.getLoginPage()
                 .checkTitleScreen()
-                .authorizationValidData();
+                .authorizationValidData(TestDataConst.VALID_LOGIN, TestDataConst.VALID_PASSWORD);
     }
 
     @Test
@@ -18,7 +19,7 @@ public class AuthorizationTest extends BaseTest {
     public void errAuthorizationTest() {
         pageManager.getLoginPage()
                 .checkTitleScreen()
-                .authorizationInvalidData();
+                .authorizationInvalidData(TestDataConst.INVALID_LOGIN, TestDataConst.INVALID_PASSWORD);
     }
 }
 

@@ -2,8 +2,6 @@ package org.my.test.app.utils;
 
 public class PropConst {
     public static final String BASE_URL = "base.url";
-    public static final String LOGIN = "login";
-    public static final String PASSWORD = "password";
     public static final String PLATFORM_NAME = "platform.name";
     public static final String DEVICE_NAME = "appium.device.name";
     public static final String AUTOMATION_NAME = "appium.automation.name";

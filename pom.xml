@@ -1,59 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.my.test.app</groupId>
     <artifactId>qwe</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
-        <!-- Кодировка -->
+        <!--  Кодировка  -->
         <encoding.type>UTF-8</encoding.type>
-
         <project.build.sourceEncoding>${encoding.type}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding.type}</project.reporting.outputEncoding>
         <file.encoding>${encoding.type}</file.encoding>
-
-        <!-- Версия Java -->
+        <!--  Версия Java  -->
         <java.version>11</java.version>
-
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-
-        <!-- Веврсии зависимостей -->
+        <!--  Веврсии зависимостей  -->
         <junit.jupiter.version>5.10.0</junit.jupiter.version>
         <junit-platform-launcher.version>1.10.0</junit-platform-launcher.version>
+        <java-client>9.0.0</java-client>
         <selenium-java.version>4.17.0</selenium-java.version>
-        <commons-validator.version>1.7</commons-validator.version>
+        <allure-junit5.version>2.21.0</allure-junit5.version>
+        <!--  Веврсии плагинов  -->
+        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+        <aspectj.version>1.9.21</aspectj.version>
         <allure-maven.version>2.12.0</allure-maven.version>
-        <lombok.version>1.18.30</lombok.version>
-
-        <!-- Версии плагинов -->
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
-        <allure-maven.version>2.10.0</allure-maven.version>
-
-
     </properties>
-
+    <dependencies>
+        <!--  https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter  -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+        </dependency>
+        <!--  https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher  -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit-platform-launcher.version}</version>
+        </dependency>
+        <!--  https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java  -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium-java.version}</version>
+        </dependency>
+        <!--  https://mvnrepository.com/artifact/io.appium/java-client  -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${java-client}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure-junit5.version}</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
-
-            <!-- Плагин, который отвечает за компеляцию как тестов так и в целом всех Java-классов -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${encoding.type}</encoding>
-                </configuration>
-            </plugin>
-
-            <!-- Плагин, который отвечает за запуск тестов и сбор информации о состоянии тестов которые были запущены -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -61,27 +64,38 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>**/*Test.java</includes>
-                    <argLine>
-                        -Xmx1024m
-                        -Dfile.encoding=${encoding.type}
-                        -Dallure.result.directory=${project.build.directory}/reports/allure-results
-                    </argLine>
+                    <argLine> -Xmx1024m -Dfile.encoding=${encoding.type} -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit5.AllureJunit5</value>
+                        </property>
+                    </properties>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/reports/allure-reports</allure.results.directory>
+                    </systemPropertyVariables>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-
-            <!-- Плагин, который отвечает за формирование Allure отчета -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>${allure-maven.version}</version>
                 <configuration>
                     <reportVersion>${allure-maven.version}</reportVersion>
-                    <resultsDirectory>${project.build.directory}/reports/allure-results</resultsDirectory>
+                    <resultsDirectory>${project.build.directory}/reports/allure-reports</resultsDirectory>
                     <reportDirectory>${project.build.directory}/reports/allure-reports</reportDirectory>
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>Allure-plugin</id>
+                        <phase>install</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -90,46 +104,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit.jupiter.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>${junit-platform-launcher.version}</version>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium-java.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit4 -->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-maven</artifactId>
-            <version>${allure-maven.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
-        <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>9.0.0</version>
-        </dependency>
-
-    </dependencies>
-
 </project>
